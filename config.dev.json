@@ -13,7 +13,7 @@
   "language": "en",
   "notesLanguage": "Set language with ISO 639-1 code. Available: vi (Vietnamese), en (English).",
   "adminOnly": {
-    "enable": false,
+    "enable": true,
     "ignoreCommand": []
   },
   "adminBot": [
@@ -123,13 +123,13 @@
     }
   },
   "hideNotiMessage": {
-    "commandNotFound": false,
-    "adminOnly": false,
-    "threadBanned": false,
-    "userBanned": false,
-    "needRoleToUseCmd": false,
-    "needRoleToUseCmdOnReply": false,
-    "needRoleToUseCmdOnReaction": false
+    "commandNotFound": true,
+    "adminOnly": true,
+    "threadBanned": true,
+    "userBanned": true,
+    "needRoleToUseCmd": true,
+    "needRoleToUseCmdOnReply": true,
+    "needRoleToUseCmdOnReaction": true
   },
   "logEvents": {
     "disableAll": false,

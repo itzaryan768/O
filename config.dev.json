@@ -43,7 +43,7 @@
   "nickNameBot": "YOᑌᖇ ᗷOY 🚩💜",
   "prefix": ".",
   "database": {
-    "type": "sqlite",
+    "type": "mongodb",
     "uriMongodb": "mongodb+srv://simisimiv2:2TmkspgESAT7rFWD@simisimi.is7na.mongodb.net/?retryWrites=true&w=majority&appName=SimiSimi",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,

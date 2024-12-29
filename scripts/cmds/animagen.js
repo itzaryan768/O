@@ -31,7 +31,7 @@ module.exports = {
 
  api.setMessageReaction("⏰", event.messageID, () => {}, true);
 
- const baseURL = `https://aryanchauhanapi2.onrender.com/api/animagen31;
+ const baseURL = `https://aryanchauhanapi2.onrender.com/api/animagen31`;
  const params = { prompt, ar }; 
 
  const response = await axios.get(baseURL, {

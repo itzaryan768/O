@@ -24,7 +24,7 @@ module.exports = {
     role: 0,
     shortDescription: "Generate and select images using styles.",
     longDescription: "Generates images based on a prompt and style, then allows selection.",
-    category: "AI",
+    category: "media",
     guide: "{pn} <prompt> [--ar <ratio>] [--s <style>]"
   },
   onStart: async function ({ message, args, api, event }) {

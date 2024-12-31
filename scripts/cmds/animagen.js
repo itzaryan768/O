@@ -3,14 +3,14 @@ const fs = require('fs');
 
 module.exports = {
  config: {
- name: "animagen",
+ name: "xl31",
  version: "1.2",
  author: "ArYAN",
  countDown: 0,
  role: 0,
  category: "media",
  guide: {
- en: "{p}animagen <prompt> [--ar=<aspect_ratio>] or [--ar <aspect_ratio>]"
+ en: "{p}xl31 <prompt> [--ar=<aspect_ratio>] or [--ar <aspect_ratio>]"
  }
  },
 
@@ -41,7 +41,7 @@ module.exports = {
 
  api.setMessageReaction("✅", event.messageID, () => {}, true);
 
- const fileName = 'animagen.png';
+ const fileName = 'xl31.png';
  const filePath = `/tmp/${fileName}`;
  const writerStream = fs.createWriteStream(filePath);
 

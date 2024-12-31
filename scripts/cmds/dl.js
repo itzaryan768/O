@@ -14,7 +14,7 @@ module.exports = {
     description: {
       en: "Download video from a URL and send it in the chat."
     },
-    category: "𝗠𝗘𝗗𝗜𝗔",
+    category: "media",
     guide: {
       en: "Use the command: !alldl <url> or reply to a message containing a link."
     }

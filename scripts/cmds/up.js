@@ -5,7 +5,8 @@ const startTime = new Date(); // Moved outside onStart
 
 module.exports = {
   config: {
-    name: "uptime", 
+    name: "uptime",
+    aliases: ["up"],
     author: "ArYAN",
     countDown: 0,
     role: 0,

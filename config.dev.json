@@ -13,30 +13,35 @@
   "language": "en",
   "notesLanguage": "Set language with ISO 639-1 code. Available: vi (Vietnamese), en (English).",
   "adminOnly": {
-    "enable": true,
+    "enable": false,
     "ignoreCommand": []
   },
   "adminBot": [
     "61570406646668",
-    "61564142823751"
+    "61564142823751",
+    "61571037826654"
   ],
   "GOD": [
     "61570406646668",
-    "61564142823751"
+    "61564142823751",
+    "61571037826654"
   ],
   "vipUser": [
     "61570406646668",
-    "61564142823751"
+    "61564142823751",
+    "61571037826654"
   ],
   "DEV": [
     "61570406646668",
-    "61564142823751"
+    "61564142823751",
+    "61571037826654"
   ],
   "whiteListMode": {
     "enable": false,
     "whiteListIds": [
      "61570406646668",
-     "61564142823751"
+     "61564142823751",
+    "61571037826654"
     ],
     "notes": "If enabled, only the IDs in whiteListIds can use the bot."
   },
@@ -123,13 +128,13 @@
     }
   },
   "hideNotiMessage": {
-    "commandNotFound": true,
-    "adminOnly": true,
-    "threadBanned": true,
-    "userBanned": true,
-    "needRoleToUseCmd": true,
-    "needRoleToUseCmdOnReply": true,
-    "needRoleToUseCmdOnReaction": true
+    "commandNotFound": false,
+    "adminOnly": false,
+    "threadBanned": false,
+    "userBanned": false,
+    "needRoleToUseCmd": false,
+    "needRoleToUseCmdOnReply": false,
+    "needRoleToUseCmdOnReaction": false
   },
   "logEvents": {
     "disableAll": false,

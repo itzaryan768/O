@@ -12,7 +12,7 @@ module.exports = {
   onStart: async ({ api }) => {
     async function fetchRandomQuote() {
       try {
-        const response = await axios.get('https://aryanchauhanapi.onrender.com/api/motivation');
+        const response = await axios.get('https://aryanchauhanapi2.onrender.com/api/motivation');
         return response.data.motivation;
       } catch (error) {
         console.error("Error fetching quote:", error);

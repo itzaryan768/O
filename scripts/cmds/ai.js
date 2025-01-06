@@ -3,11 +3,15 @@ const axios = require('axios');
 const Prefixes = [
  'ai',
 '.ai',
+'orochi',
+ '.orochi',
+ '.chi',
 ];
 
 module.exports = {
  config: {
- name: 'ai',
+ name: 'orochi',
+ aliases: ["chi"],
  version: '1.0.6',
  author: 'Aryan Chauhan', 
  role: 0,

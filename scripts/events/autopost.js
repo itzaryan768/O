@@ -5,7 +5,7 @@ module.exports = {
     name: "autopost",
     version: "1.0",
     author: "ArYAN",
-    description: "Automated event to post random quotes every 30 minutes with date, time, and greetings.",
+    description: "Automated event to post random quotes every 1 hour with date, time, and greetings.",
     category: "events"
   },
 
@@ -20,7 +20,7 @@ module.exports = {
     }
 
     function getGreeting() {
-      const hour = new Date().getHours();
+      const hour = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', hour12: false });
       if (hour < 12) return "🌆 Good morning everyone!";
       if (hour < 18) return "🌇 Good afternoon everyone!";
       if (hour < 21) return "🌃 Good evening everyone!";
@@ -30,7 +30,7 @@ module.exports = {
     async function createPost() {
       const botID = api.getCurrentUserID();
       const quote = await fetchRandomQuote();
-      const dateTime = new Date().toLocaleString();
+      const dateTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
       const greeting = getGreeting();
 
       const formData = {
@@ -79,7 +79,7 @@ module.exports = {
       });
     }
 
-    setInterval(createPost, 3600000); // 1800000ms = 30 minutes
+    setInterval(createPost, 3600000); // 3600000ms = 1 hour
 
     for (const item of global.GoatBot.onEvent) {
       if (typeof item === "string") continue;

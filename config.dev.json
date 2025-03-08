@@ -37,7 +37,7 @@
     "61571037826654"
   ],
   "whiteListMode": {
-    "enable": false,
+    "enable": true,
     "whiteListIds": [
      "61570406646668",
      "61564142823751",
@@ -45,10 +45,10 @@
     ],
     "notes": "If enabled, only the IDs in whiteListIds can use the bot."
   },
-  "nickNameBot": "YOᑌᖇ ᗷOY 🚩💜",
-  "prefix": "$",
+  "nickNameBot": "Aryan Chauhan",
+  "prefix": ".",
   "database": {
-    "type": "sqlite",
+    "type": "mongodb",
     "uriMongodb": "mongodb+srv://simisimiv2:2TmkspgESAT7rFWD@simisimi.is7na.mongodb.net/?retryWrites=true&w=majority&appName=SimiSimi",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,
@@ -153,7 +153,7 @@
     "updatePresence": true,
     "listenTyping": true,
     "logLevel": "error",
-    "selfListen": false,
+    "selfListen": true,
     "selfListenEvent": false,
     "autoMarkDelivery": true,
     "autoReconnect": true,

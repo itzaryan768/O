@@ -124,4 +124,52 @@ module.exports = {
  
  const combinedImagePath = path.join(cacheFolderPath, `image_combined_${Date.now()}.jpg`);
  const buffer = canvas.toBuffer("image/jpeg");
- f
+ fs.writeFileSync(combinedImagePath, buffer); 
+ api.setMessageReaction("✅", event.messageID, () => {}, true);
+
+ const reply = await message.reply({
+ body: `Select an image by responding with 1, 2, 3, or 4.`,
+ attachment: fs.createReadStream(combinedImagePath)
+ });
+
+ const data = {
+ commandName: this.config.name,
+ messageID: reply.messageID,
+ images: images,
+ combinedImage: combinedImagePath,
+ author: event.senderID
+ };
+
+ global.GoatBot.onReply.set(reply.messageID, data);
+
+ } catch (error) {
+ api.setMessageReaction("❌", event.messageID, () => {}, true);
+ console.error("Error:", error.response ? error.response.data : error.message);
+ message.reply("❌ | Failed to generate image.");
+ }
+ },
+
+ onReply: async function ({message, event}) {
+ const replyData = global.GoatBot.onReply.get(event.messageReply.messageID);
+ 
+ if (!replyData || replyData.author !== event.senderID) {
+ return;
+ }
+ 
+ try {
+ const index = parseInt(event.body.trim());
+ if (isNaN(index) || index < 1 || index > 4) {
+ return message.reply("❌ | Invalid selection. Please reply with a number between 1 and 4.");
+ }
+ 
+ const selectedImagePath = replyData.images[index - 1];
+ await message.reply({
+ attachment: fs.createReadStream(selectedImagePath)
+ });
+ } catch (error) {
+ console.error("Error:", error.message);
+ message.reply("❌ | Failed to send selected image.");
+ }
+ }
+ 
+};

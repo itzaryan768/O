@@ -19,8 +19,7 @@
   "adminBot": [
     "61570406646668",
     "61564142823751",
-    "61571037826654",
-    "9383209238461422"
+    "61571037826654"
   ],
   "GOD": [
     "61570406646668",
@@ -38,7 +37,7 @@
     "61571037826654"
   ],
   "whiteListMode": {
-    "enable": false,
+    "enable": true,
     "whiteListIds": [
      "61570406646668",
      "61564142823751",
@@ -46,7 +45,7 @@
     ],
     "notes": "If enabled, only the IDs in whiteListIds can use the bot."
   },
-  "nickNameBot": "Gojo Satoru 💫",
+  "nickNameBot": "Aryan Chauhan 😚❤️",
   "prefix": ".",
   "database": {
     "type": "mongodb",

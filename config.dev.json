@@ -132,9 +132,9 @@
     "adminOnly": true,
     "threadBanned": false,
     "userBanned": false,
-    "needRoleToUseCmd": true,
-    "needRoleToUseCmdOnReply": true,
-    "needRoleToUseCmdOnReaction": true
+    "needRoleToUseCmd": false,
+    "needRoleToUseCmdOnReply": false,
+    "needRoleToUseCmdOnReaction": false
   },
   "logEvents": {
     "disableAll": false,

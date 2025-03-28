@@ -17,31 +17,21 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "61570406646668",
-    "61564142823751",
-    "61571037826654"
+    "61550548915599"
   ],
   "GOD": [
-    "61570406646668",
-    "61564142823751",
-    "61571037826654"
+    "61550548915599"
   ],
   "vipUser": [
-    "61570406646668",
-    "61564142823751",
-    "61571037826654"
+    "61550548915599"
   ],
   "DEV": [
-    "61570406646668",
-    "61564142823751",
-    "61571037826654"
+    "61550548915599"
   ],
   "whiteListMode": {
     "enable": false,
     "whiteListIds": [
-     "61570406646668",
-     "61564142823751",
-    "61571037826654"
+     "61550548915599"
     ],
     "notes": "If enabled, only the IDs in whiteListIds can use the bot."
   },
@@ -132,9 +122,9 @@
     "adminOnly": true,
     "threadBanned": false,
     "userBanned": false,
-    "needRoleToUseCmd": false,
-    "needRoleToUseCmdOnReply": false,
-    "needRoleToUseCmdOnReaction": false
+    "needRoleToUseCmd": true,
+    "needRoleToUseCmdOnReply": true,
+    "needRoleToUseCmdOnReaction": true
   },
   "logEvents": {
     "disableAll": false,

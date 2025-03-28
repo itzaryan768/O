@@ -128,13 +128,13 @@
     }
   },
   "hideNotiMessage": {
-    "commandNotFound": false,
-    "adminOnly": false,
+    "commandNotFound": true,
+    "adminOnly": true,
     "threadBanned": false,
     "userBanned": false,
-    "needRoleToUseCmd": false,
-    "needRoleToUseCmdOnReply": false,
-    "needRoleToUseCmdOnReaction": false
+    "needRoleToUseCmd": true,
+    "needRoleToUseCmdOnReply": true,
+    "needRoleToUseCmdOnReaction": true
   },
   "logEvents": {
     "disableAll": false,
@@ -151,11 +151,11 @@
     "forceLogin": true,
     "listenEvents": true,
     "updatePresence": true,
-    "listenTyping": true,
+    "listenTyping": false,
     "logLevel": "error",
-    "selfListen": true,
+    "selfListen": false,
     "selfListenEvent": false,
-    "autoMarkDelivery": true,
+    "autoMarkDelivery": false,
     "autoReconnect": true,
     "notes": "See documentation for usage."
   },

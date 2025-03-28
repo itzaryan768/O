@@ -48,7 +48,7 @@
   "nickNameBot": "Aryan Chauhan 😚❤️",
   "prefix": ".",
   "database": {
-    "type": "mongodb",
+    "type": "sqlite",
     "uriMongodb": "mongodb+srv://simisimiv2:2TmkspgESAT7rFWD@simisimi.is7na.mongodb.net/?retryWrites=true&w=majority&appName=SimiSimi",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,

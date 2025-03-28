@@ -88,10 +88,8 @@ module.exports = {
       const userInfo = await api.getUserInfo(event.senderID);
       const userName = userInfo[event.senderID].name;
 
-      const rankTitle = user.correct >= 50 ? "Quiz Champion 👑" : 
-                       user.correct >= 25 ? "Quiz Master 🎓" :
-                       user.correct >= 10 ? "Quiz Pro ⭐" : "Novice 🌟";
-
+      const position = user.position;
+      const totalUser = user.totalUsers;
       const progressBar = this.generateProgressBar(user.percentile);
 
       const badges = [
@@ -104,8 +102,7 @@ module.exports = {
       return message.reply(
         `🎮 𝗤𝘂𝗶𝘇 𝗣𝗿𝗼𝗳𝗶𝗹𝗲 ${badges}\n━━━━━━━━━━━━━\n\n` +
         `👤 ${userName}\n` +
-        `🏆 𝖦𝗅𝗈𝖻𝖺𝗅 𝖱𝖺𝗇𝗄: ${user.position}/${user.totalUsers}\n` +
-        `💫 𝖳𝗂𝗍𝗅𝖾: ${rankTitle}\n` +
+        `🏆 𝖦𝗅𝗈𝖻𝖺𝗅 𝖱𝖺𝗇𝗄: ${position}/${totalUsers}\n` +
         `📈 𝖯𝖾𝗋𝖼𝖾𝗇𝗍𝗂𝗅𝖾: ${progressBar} ${user.percentile}%\n\n` +
         `📊 𝗦𝘁𝗮𝘁𝗶𝘀𝘁𝗶𝗰𝘀\n` +
         `✅ 𝖢𝗈𝗋𝗋𝖾𝖼𝗍: ${user.correct}\n` +

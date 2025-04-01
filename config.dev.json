@@ -101,7 +101,7 @@
   "notiWhenListenMqttError": {
     "notes": "Message sent when the bot has issues with MQTT server.",
     "gmail": {
-      "enable": true,
+      "enable": false,
       "emailGetNoti": "aryanchauhan78577@gmail.com",
       "note": "Notification sent to emailGetNoti."
     },

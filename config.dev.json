@@ -38,7 +38,7 @@
   "nickNameBot": "Itz Aman 😚❤️",
   "prefix": ".",
   "database": {
-    "type": "mongodb",
+    "type": "sqlite",
     "uriMongodb": "mongodb+srv://lawev69346:Pl3TXOABHncfTxtH@simapi.2kfnk.mongodb.net/?retryWrites=true&w=majority&appName=SimAPI",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,

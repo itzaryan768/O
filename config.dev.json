@@ -35,11 +35,11 @@
     ],
     "notes": "If enabled, only the IDs in whiteListIds can use the bot."
   },
-  "nickNameBot": "Aryan Chauhan 😚❤️",
+  "nickNameBot": "Itz Aman 😚❤️",
   "prefix": ".",
   "database": {
-    "type": "sqlite",
-    "uriMongodb": "mongodb+srv://simisimiv2:2TmkspgESAT7rFWD@simisimi.is7na.mongodb.net/?retryWrites=true&w=majority&appName=SimiSimi",
+    "type": "mongodb",
+    "uriMongodb": "mongodb+srv://lawev69346:Pl3TXOABHncfTxtH@simapi.2kfnk.mongodb.net/?retryWrites=true&w=majority&appName=SimAPI",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,
     "notes": "Use 'mongodb' or 'sqlite' as type. For MongoDB, provide the connection URI."

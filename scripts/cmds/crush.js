@@ -30,7 +30,7 @@ module.exports = {
     const pathAvt2 = `${cachePath}/crush_avt2.png`;
 
     try {
-      const bgUrl = "http://goatbiin.onrender.com/gvuDwSd_W.jpg";
+      const bgUrl = "https://i.imgur.com/PlVBaM1.jpg";
       if (!fs.existsSync(pathImg)) {
         const bgBuffer = (await axios.get(bgUrl, { responseType: "arraybuffer" })).data;
         fs.writeFileSync(pathImg, bgBuffer);

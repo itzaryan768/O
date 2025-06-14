@@ -8,7 +8,7 @@ module.exports = {
     author: "ArYAN",
     countDown: 0,
     role: 0,
-    category: "ai",
+    category: "media",
     guide: {
       en: "{p}xl31 <prompt> [--ar=<aspect_ratio>] or [--ar <aspect_ratio>]"
     }
@@ -31,7 +31,7 @@ module.exports = {
 
       api.setMessageReaction("⏰", event.messageID, () => {}, true);
 
-      const baseURL = `https://aryanchauhanapi2.onrender.com/api/animagen31`;
+      const baseURL = `https://smfahim.xyz/xl31`;
       const params = { prompt, ar }; 
 
       const response = await axios.get(baseURL, {

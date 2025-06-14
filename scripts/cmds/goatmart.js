@@ -13,7 +13,7 @@ module.exports = {
     longDescription: {
       en: "✨ Browse, search, upload, and manage your commands in the GoatMart marketplace with easy sharing cmds."
     },
-    category: "market",
+    category: "tools",
     version: "12.1",
     role: 0,
     author: "GoatMart",

@@ -42,7 +42,7 @@ module.exports = {
         );
       }
 
-      const apiUrl = `https://aryanchauhanapi2.onrender.com/api/pint?search=${encodeURIComponent(keySearchs)}&count=${numberSearch}`;
+      const apiUrl = `https://pinapi.vercel.app/api/pint?search=${encodeURIComponent(keySearchs)}&count=${numberSearch}`;
       console.log(`Fetching data from API: ${apiUrl}`);
       
       const res = await axios.get(apiUrl);

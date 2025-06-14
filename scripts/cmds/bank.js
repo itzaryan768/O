@@ -12,7 +12,7 @@ module.exports = {
     longDescription: {
       en: "Advanced Banking System with deposits, loans, stocks, lottery, and comprehensive financial services.",
     },
-    category: "banking",
+    category: "economy",
     guide: {
       en: "Complete banking system with stocks, lottery, loans, and more!",
     },

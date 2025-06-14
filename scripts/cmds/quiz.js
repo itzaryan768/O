@@ -13,7 +13,7 @@ module.exports = {
     longDescription: { 
       en: "Advanced quiz game with social features, multiplayer, achievements, and comprehensive analytics" 
     },
-    category: "game",
+    category: "economy",
     guide: {
       en: `🎯 𝗤𝘂𝗶𝘇 𝗖𝗼𝗺𝗺𝗮𝗻𝗱 𝗚𝘂𝗶𝗱𝗲
 ━━━━━━━━━━━━━━━━━━━━

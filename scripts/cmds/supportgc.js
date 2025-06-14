@@ -13,7 +13,7 @@ module.exports = {
   },
 
   onStart: async function ({ api, event, args }) {
-    const SUPPORT_GC_THREAD_ID = "9383209238461422"; 
+    const SUPPORT_GC_THREAD_ID = "24594361020154416"; 
 
     try {
       let userIDs = [];

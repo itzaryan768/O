@@ -657,13 +657,13 @@ Use "quiz categories" to see all available categories!`);
   async handleFlagQuiz(message, event, commandName, api) {
   try {
     const res = await axios.get(`${BASE_URL}/question?category=flag&userId=${event.senderID}`);
-    const { _id, flagImage, question, options, answer } = res.data;
+    const { _id, question, options, answer } = res.data;
 
     const flagEmbed = {
-      body: `🏁 𝗙𝗹𝗮𝗴 𝗤𝘂𝗶𝘇\n━━━━━━━━━━━━━━━━\n\n🌍 ${question}\n\n` +
+      body: `🏁 𝗙𝗹𝗮𝗴 𝗤𝘂𝗶𝘇\n━━━━━━━━━━━━━━━━\n\n🌍 Guess this country's flag:\n\n` +
             options.map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`).join("\n") +
             `\n\n⏰ Time: 30 seconds`,
-      attachment: flagImage ? await global.utils.getStreamFromURL(flagImage) : null
+      attachment: question ? await global.utils.getStreamFromURL(question) : null
     };
 
     const info = await message.reply(flagEmbed);
@@ -697,7 +697,6 @@ Use "quiz categories" to see all available categories!`);
     try {
       const userName = await this.getUserName(api, event.senderID);
 
-      // Update user name in database
       await axios.post(`${BASE_URL}/user/update`, {
         userId: event.senderID,
         name: userName

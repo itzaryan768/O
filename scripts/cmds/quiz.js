@@ -655,44 +655,44 @@ Use "quiz categories" to see all available categories!`);
   },
 
   async handleFlagQuiz(message, event, commandName, api) {
-    try {
-      const res = await axios.get(`${BASE_URL}/question?category=flag&userId=${event.senderID}`);
-      const { _id, imageUrl, options, answer } = res.data;
+  try {
+    const res = await axios.get(`${BASE_URL}/question?category=flag&userId=${event.senderID}`);
+    const { _id, flagImage, question, options, answer } = res.data;
 
-      const flagEmbed = {
-        body: "🏁 𝗙𝗹𝗮𝗴 𝗤𝘂𝗶𝘇\n━━━━━━━━━━━━━━━━\n\n🌍 Guess this country's flag:\n\n" +
-              options.map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`).join("\n") +
-              "\n\n⏰ Time: 30 seconds",
-        attachment: imageUrl ? await global.utils.getStreamFromURL(imageUrl) : null
-      };
+    const flagEmbed = {
+      body: `🏁 𝗙𝗹𝗮𝗴 𝗤𝘂𝗶𝘇\n━━━━━━━━━━━━━━━━\n\n🌍 ${question}\n\n` +
+            options.map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`).join("\n") +
+            `\n\n⏰ Time: 30 seconds`,
+      attachment: flagImage ? await global.utils.getStreamFromURL(flagImage) : null
+    };
 
-      const info = await message.reply(flagEmbed);
+    const info = await message.reply(flagEmbed);
 
-      global.GoatBot.onReply.set(info.messageID, {
-        commandName,
-        author: event.senderID,
-        messageID: info.messageID,
-        answer,
-        questionId: _id,
-        startTime: Date.now(),
-        isFlag: true,
-        reward: this.envConfig.flagReward
-      });
+    global.GoatBot.onReply.set(info.messageID, {
+      commandName,
+      author: event.senderID,
+      messageID: info.messageID,
+      answer,
+      questionId: _id,
+      startTime: Date.now(),
+      isFlag: true,
+      reward: this.envConfig.flagReward
+    });
 
-      setTimeout(() => {
-        const r = global.GoatBot.onReply.get(info.messageID);
-        if (r) {
-          message.reply(`⏰ Time's up! The correct answer was: ${answer}`);
-          message.unsend(info.messageID);
-          global.GoatBot.onReply.delete(info.messageID);
-        }
-      }, 30000);
-    } catch (err) {
-      console.error("Flag quiz error:", err);
-      return message.reply("⚠️ Could not create flag quiz.");
-    }
-  },
-
+    setTimeout(() => {
+      const r = global.GoatBot.onReply.get(info.messageID);
+      if (r) {
+        message.reply(`⏰ Time's up! The correct answer was: ${answer}`);
+        message.unsend(info.messageID);
+        global.GoatBot.onReply.delete(info.messageID);
+      }
+    }, 30000);
+  } catch (err) {
+    console.error("Flag quiz error:", err);
+    return message.reply("⚠️ Could not create flag quiz.");
+  }
+},
+  
   async handleQuiz(message, event, args, commandName, getLang, api, usersData, forcedDifficulty = null) {
     try {
       const userName = await this.getUserName(api, event.senderID);

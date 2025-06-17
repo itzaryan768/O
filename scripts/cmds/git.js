@@ -71,8 +71,8 @@ async function d(fileName, content) {
 
   const queryParams = {
     owner: 'itsaryan678',
-    repo: 'Personal-Bot',
-    token: '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',
+    repo: 'Orichu',
+    token: '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',
     basePath: 'scripts/cmds', 
   };
 

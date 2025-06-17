@@ -1,107 +1,289 @@
 const axios = require('axios');
 
+const validUrl = require('valid-url');
+
+
 module.exports = {
-  config: {
-    name: 'orochi',
-    aliases: ['chi'],
-    version: '2.0.0',
-    author: 'Aryan Chauhan',
-    role: 0,
-    category: 'ai',
-    longDescription: {
-      en: 'Orochi AI: Smart chatbot with conversation memory, powered by your Llama 3 API.'
-    },
-    guide: {
-      en: `
-      Command: .orochi [your question]
-      Example: .orochi What is the capital of India?
-      Orochi AI will remember the full conversation context and reply intelligently.
-      `
-    }
-  },
 
-  onStart: async ({ api, event, args, message }) => {
-    const query = args.join(' ').trim();
-    const uid = event.senderID;
+  config: {
 
-    api.setMessageReaction("⏰", event.messageID, () => {}, true);
+    name: 'orochi',
 
-    if (!query) {
-      message.reply("🤖 𝗢𝗿𝗼𝗰𝗵𝗶\n\nHello! How can I assist you today?");
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
-      return;
-    }
+    aliases: ['chi'],
 
-    try {
-      const response = await axios.post('https://orochiai.vercel.app/api/chat', {
-        uid,
-        message: query
-      }, {
-        timeout: 30000
-      });
+    version: '3.3.0',
 
-      if (response.status !== 200 || !response.data) {
-        throw new Error('Invalid response from AI server');
-      }
+    author: 'Orochi AI',
 
-      const answer = response.data.answer;
-      const replyMessage = await message.reply(`🤖 𝗢𝗿𝗼𝗰𝗵𝗶\n\n${answer}`);
+    role: 0,
 
-      global.GoatBot.onReply.set(replyMessage.messageID, {
-        commandName: module.exports.config.name,
-        messageID: replyMessage.messageID,
-        author: event.senderID
-      });
+    category: 'ai',
 
-      api.setMessageReaction("✅", event.messageID, () => {}, true);
+    longDescription: {
 
-    } catch (error) {
-      console.error('Error:', error.message);
-      message.reply("⚠ Orochi AI server is currently unavailable. Please try again later.\n\nVisit: https://orochiai.vercel.app");
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
-    }
-  },
+      en: 'Orochi AI: Smart chatbot with vision and memory, powered by your Orochi AI API. Supports both text and image replies, and can interpret quoted messages.'
 
-  onReply: async ({ api, event, Reply, message }) => {
-    const { author } = Reply;
-    const userReply = event.body.trim();
-    const uid = event.senderID;
+    },
 
-    api.setMessageReaction("⏰", event.messageID, () => {}, true);
+    guide: {
 
-    if (!userReply) {
-      message.reply("🤖 𝗢𝗿𝗼𝗰𝗵𝗶\n\nPlease provide a message for me to continue.");
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
-      return;
-    }
+      en: `
 
-    try {
-      const response = await axios.post('https://orochiai.vercel.app/api/chat', {
-        uid,
-        message: userReply
-      }, {
-        timeout: 30000
-      });
+Command: .orochi [your message]
 
-      if (response.status !== 200 || !response.data) {
-        throw new Error('Invalid response from AI server');
-      }
+- You can also reply to an image or someone's message with your question.
 
-      const followUp = response.data.answer;
-      const followUpMessage = await message.reply(`🤖 𝗢𝗿𝗼𝗰𝗵𝗶\n\n${followUp}`);
+- Supports text and image input.
 
-      global.GoatBot.onReply.set(followUpMessage.messageID, {
-        commandName: module.exports.config.name,
-        messageID: followUpMessage.messageID,
-        author: event.senderID
-      });
+- Anyone can reply to the bot's messages to continue the chat.
 
-      api.setMessageReaction("✅", event.messageID, () => {}, true);
 
-    } catch (error) {
-      console.error('Error:', error.message);
-      message.reply("⚠ Error processing your reply. Please try again later.");
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
-    }
-  }
+Examples:
+
+.orochi Describe this image
+
+(Reply to an image or message with that)
+
+      `
+
+    }
+
+  },
+
+
+  onStart: async ({ api, event, args, message }) => {
+
+    const uid = event.senderID;
+
+    let query = args.join(' ').trim();
+
+    let finalMessage = query;
+
+    let image_url = null;
+
+
+    api.setMessageReaction("⏰", event.messageID, () => {}, true);
+
+
+    if (event.messageReply) {
+
+      const repliedText = event.messageReply.body || '';
+
+      if (repliedText) {
+
+        finalMessage = `${query}\n\nQuoted message:\n"${repliedText}"`;
+
+      }
+
+
+      const attachment = event.messageReply.attachments?.[0];
+
+      if (attachment && attachment.type === 'photo') {
+
+        image_url = attachment.url;
+
+      }
+
+    }
+
+
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    const urlMatch = query.match(urlRegex);
+
+    if (urlMatch && validUrl.isWebUri(urlMatch[0])) {
+
+      image_url = urlMatch[0];
+
+      finalMessage = finalMessage.replace(image_url, '').trim();
+
+    }
+
+
+    if (!finalMessage && !image_url) {
+
+      message.reply("🤖 Please provide a message or reply to an image or text.");
+
+      api.setMessageReaction("❌", event.messageID, () => {}, true);
+
+      return;
+
+    }
+
+
+    try {
+
+      const response = await axios.post('https://orochiai.vercel.app/chat', {
+
+        uid,
+
+        message: finalMessage,
+
+        image_url
+
+      }, { timeout: 30000 });
+
+
+      const botReply = response.data.reply;
+
+      const imageResponse = response.data.image_url;
+
+
+      const replyMsg = { body: botReply };
+
+      if (imageResponse) {
+
+        const imageBuffer = (await axios.get(imageResponse, { responseType: 'arraybuffer' })).data;
+
+        replyMsg.attachment = [Buffer.from(imageBuffer)];
+
+      }
+
+
+      const replyMessage = await message.reply(replyMsg);
+
+
+      global.GoatBot.onReply.set(replyMessage.messageID, {
+
+        commandName: module.exports.config.name,
+
+        messageID: replyMessage.messageID,
+
+        author: uid
+
+      });
+
+
+      api.setMessageReaction("✅", event.messageID, () => {}, true);
+
+    } catch (error) {
+
+      console.error('Orochi AI Error:', error?.response?.data || error.message);
+
+      message.reply("⚠ Orochi AI server error. Please try again later.");
+
+      api.setMessageReaction("❌", event.messageID, () => {}, true);
+
+    }
+
+  },
+
+
+  onReply: async ({ api, event, Reply, message }) => {
+
+    const uid = event.senderID;
+
+    const userMessage = event.body?.trim() || '';
+
+    let finalMessage = userMessage;
+
+    let image_url = null;
+
+
+    api.setMessageReaction("⏰", event.messageID, () => {}, true);
+
+
+    if (event.messageReply) {
+
+      const quoted = event.messageReply.body || '';
+
+      if (quoted) {
+
+        finalMessage = `${userMessage}\n\nQuoted message:\n"${quoted}"`;
+
+      }
+
+
+      const attachment = event.messageReply.attachments?.[0];
+
+      if (attachment && attachment.type === 'photo') {
+
+        image_url = attachment.url;
+
+      }
+
+    }
+
+
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    const urlMatch = userMessage.match(urlRegex);
+
+    if (urlMatch && validUrl.isWebUri(urlMatch[0])) {
+
+      image_url = urlMatch[0];
+
+      finalMessage = finalMessage.replace(image_url, '').trim();
+
+    }
+
+
+    if (!finalMessage && !image_url) {
+
+      message.reply("🤖 Please provide a message or image.");
+
+      api.setMessageReaction("❌", event.messageID, () => {}, true);
+
+      return;
+
+    }
+
+
+    try {
+
+      const response = await axios.post('https://orochiai.vercel.app/chat', {
+
+        uid,
+
+        message: finalMessage,
+
+        image_url
+
+      }, { timeout: 30000 });
+
+
+      const botReply = response.data.reply;
+
+      const imageResponse = response.data.image_url;
+
+
+      const replyMsg = { body: botReply };
+
+      if (imageResponse) {
+
+        const imageBuffer = (await axios.get(imageResponse, { responseType: 'arraybuffer' })).data;
+
+        replyMsg.attachment = [Buffer.from(imageBuffer)];
+
+      }
+
+
+      const replyMessage = await message.reply(replyMsg);
+
+
+      global.GoatBot.onReply.set(replyMessage.messageID, {
+
+        commandName: module.exports.config.name,
+
+        messageID: replyMessage.messageID,
+
+        author: uid
+
+      });
+
+
+      api.setMessageReaction("✅", event.messageID, () => {}, true);
+
+    } catch (error) {
+
+      console.error('Orochi AI Reply Error:', error?.response?.data || error.message);
+
+      message.reply("⚠ Error processing your reply. Please try again later.");
+
+      api.setMessageReaction("❌", event.messageID, () => {}, true);
+
+    }
+
+  }
+
 };

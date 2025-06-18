@@ -40,7 +40,7 @@
   "nickNameBot": "",
   "prefix": ".",
   "database": {
-    "type": "mongodb",
+    "type": "sqlite",
     "uriMongodb": "mongodb+srv://gicacyne:O90q5RwcE7PlIjKo@cluster0.mbhp0ao.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
     "autoSyncWhenStart": false,
     "autoRefreshThreadInfoFirstTime": true,

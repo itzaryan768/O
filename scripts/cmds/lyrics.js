@@ -1,59 +1,56 @@
-const axios = require("axios");
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
- config: {
- name: "lyrics",
- version: "1.0",
- author: "Team Calyx",
- countDown: 5,
- role: 0,
- description: {
- en: "This command allows you to get the lyrics for a song. Usage: !lyrics <song name>",
- ar:"يسمح لك هذا الأمر بالحصول على كلمات أغنية. الاستخدام: !كلمات <اسم الأغنية>",
- },
- category: "𝗠𝗘𝗗𝗜𝗔",
- guide: {
- en: "{prefix}lyrics <song name>",
- ar: "{prefix}كلمات <اسم الاغنية>",
- },
- },
+  config: {
+    name: "lyrics",
+    version: "2.0",
+    author: "GoatMart",
+    countDown: 5,
+    role: 0,
+    shortDescription: {
+      en: "Get lyrics of a song"
+    },
+    longDescription: {
+      en: "Fetch the lyrics of any song with its artist name and artwork using the song title."
+    },
+    category: "media",
+    guide: {
+      en: "{pn} <song name>\n\nExample:\n{pn} dil"
+    }
+  },
 
- onStart: async function ({ api, event, args }) {
- const songName = args.join(" ");
- if (!songName) {
- api.sendMessage("Please provide a song name!", event.threadID, event.messageID);
- return;
- }
+  onStart: async function ({ api, event, args }) {
+    try {
+      const songName = args.join(" ");
+      if (!songName) {
+        return api.sendMessage("❌ Please provide the name of the song.", event.threadID, event.messageID);
+      }
 
- try{
- const apiUrl2 = await getApiUrl();
- if(!apiUrl2){
- return api.sendMessage("❌ | Failed to fetch API URL.", event.threadID, event.messageID)
- }
- const apiUrl = `${apiUrl2}/lyrics?name=${encodeURIComponent(songName)}`;
+      const response = await axios.get(`https://lyricstx.vercel.app/lyrics?title=${encodeURIComponent(songName)}`);
+      const data = response.data;
 
- const response = await axios.get(apiUrl);
- const { lyrics, title, artist } = response.data;
+      if (!data.lyrics) {
+        return api.sendMessage("❌ No lyrics found for this song.", event.threadID, event.messageID);
+      }
 
- if (!lyrics) {
- api.sendMessage(`Sorry, lyrics for "${title}" by ${artist} not found!`, event.threadID, event.messageID);
- } else {
- const formattedLyrics = `🎧 | Title: ${title}\n🎤 | Artist: ${artist}\n\n${lyrics}`;
- api.sendMessage(formattedLyrics, event.threadID, event.messageID);
- }
- } catch (error) {
- console.error(error);
- api.sendMessage(`Sorry, there was an error getting the lyrics for "${songName}"!`, event.threadID, event.messageID);
- }
- },
+      const { artist_name, track_name, artwork_url, lyrics } = data;
+
+      const tmpDir = path.join(__dirname, 'tmp');
+      if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir);
+      const imgPath = path.join(tmpDir, `${Date.now()}_cover.jpg`);
+      const imgResponse = await axios.get(artwork_url, { responseType: 'arraybuffer' });
+      fs.writeFileSync(imgPath, Buffer.from(imgResponse.data, 'binary'));
+
+      api.sendMessage({
+        body: `🎵 𝗧𝗶𝘁𝗹𝗲: ${track_name}\n🎤 𝗔𝗿𝘁𝗶𝘀𝘁: ${artist_name}\n\n📄 𝗟𝘆𝗿𝗶𝗰𝘀:\n${lyrics}`,
+        attachment: fs.createReadStream(imgPath)
+      }, event.threadID, () => fs.unlinkSync(imgPath), event.messageID);
+
+    } catch (err) {
+      console.error("❌ | Error fetching lyrics:", err.message);
+      return api.sendMessage(`❌ An error occurred: ${err.message}`, event.threadID, event.messageID);
+    }
+  }
 };
-
-async function getApiUrl() {
- try {
- const response = await axios.get("https://raw.githubusercontent.com/Savage-Army/extras/refs/heads/main/api.json");
- return response.data.api;
- } catch (error) {
- console.error("Error fetching API URL:", error);
- return null;
- }
-}

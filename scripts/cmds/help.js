@@ -134,39 +134,44 @@ const bold = {
   9: "𝟵",
 };
 
-module.exports.config = {
-  name: 'help',
-  version: '1.0.0',
-  role: 0,
-  hasPrefix: true,
-  aliases: ['info'],
-  description: "Beginner's guide",
-  usage: "Help [page] or [command]",
-  credits: 'Aryan Chauhan',
-};
+module.exports = {
+  config: {
+    name: "help",
+    version: "1.0",
+    author: "ArYAN",
+    countDown: 0,
+    role: 0,
+    longDescription: {
+      en: "This command allows you to see all available commands list"
+    },
+    category: "guide",
+    guide: {
+      en: "To use this command, type ${prefix}help [ empty || CommandName ]"
+    }
+  },
 
-module.exports.run = async function ({ api, event, args, fonts, prefix }) {
+  onStart: async function ({ api, event, args, fonts, prefix }) {
     try {
       const commandFiles = fs
-        .readdirSync(path.join(__dirname, '..', 'script'))
+        .readdirSync(path.join(__dirname, '..', 'cmds'))
         .filter((file) => file.endsWith(".js"));
 
       const commands = [];
       for (const file of commandFiles) {
-        const command = require(path.join(__dirname, '..', 'script', file));
+        const command = require(path.join(__dirname, '..', 'cmds', file));
         commands.push(command);
       }
 
       if (args.length === 0) {
         let helpMessage = `📍|𝗔𝗟𝗟 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦\n\n`;
         for (const command of commands) {
-          const { name, role, description } = command.config;
-          helpMessage += apply(`├─${role === 2 ? "👑 | " : "🆓 | "}${name}\n`, bold);
-        helpMessage += apply(`│    ${description && description : "No description available"}\n`, sans);
+          const { name, role, longDescription } = command.config;
+          helpMessage += apply(`├─${role === 2 ? "❌ | " : "✅ | "}${name}\n`, bold);
+        helpMessage += apply(`│    ${longDescription && longDescription.en ? longDescription.en : "No description available"}\n`, sans);
         helpMessage += apply(`├─────────────⟡\n`, sans);
       }
       helpMessage += apply(`\n`, sans);
-      helpMessage += apply(`│ 👑 𝖬𝖺𝖽𝖾 𝗐𝗂𝗍𝗁 💜 𝖠𝗋𝗒𝖺𝗇 𝖢𝗁𝖺𝗎𝗁𝖺𝗇\n`, sans);
+      helpMessage += apply(`│  𝖠𝗋𝗒𝖺𝗇 𝖢𝗁𝖺𝗎𝗁𝖺𝗇 💜🥀\n`, sans);
       helpMessage += apply(`╰───────────────⟡\n`, sans);
         api.sendMessage({
           body: helpMessage,
@@ -181,24 +186,25 @@ module.exports.run = async function ({ api, event, args, fonts, prefix }) {
         );
 
         if (targetCommand) {
-          const { name, aliases, version, credits, role, countDown, description, guide } =
+          const { name, aliases, version, author, role, countDown, longDescription, guide } =
             targetCommand.config;
-        let helpMessage = apply(`╭•[ ${role === 2 ? "👑 | " : "🆓 | "} ${name} ]\n`, bold);
+        let helpMessage = apply(`╭•[ ${role === 2 ? "❌ | " : "✅ | "} ${name} ]\n`, bold);
         if (aliases) {
             helpMessage += apply(`│ ✧ ALIASES\n`, bold);
             helpMessage += `│    ${aliases.join(", ")}\n`;
           }
           helpMessage += apply(`│ ✧ AUTHOR\n`, bold);
-          helpMessage += `│    ${credits}\n`;
+          helpMessage += `│    ${author}\n`;
           helpMessage += apply(`│ ✧ DESCRIPTION\n`, bold);
-          helpMessage += `│    ${description && description: " No Description"}\n`;
+          helpMessage += `│    ${longDescription && longDescription.en ? longDescription.en : "No description available"}\n`;
 
           helpMessage += apply(`│ ✧ GUIDE\n`, bold);
-          helpMessage += `│    ${usage && usage : "No guide available"}\n`;
+          helpMessage += `│    ${guide && guide.en ? guide.en : "No guide available"}\n`;
 
           helpMessage += `╰────────•\n`;
           api.sendMessage(helpMessage, event.threadID, event.messageID);
         } else {
+          // Command not found
           api.sendMessage(`⛔ 𝗡𝗼 𝗗𝗮𝘁𝗮\n━━━━━━━━━━\n\nCommand not found. Use ${prefix}help to see available commands`,
             event.threadID,
             event.messageID,
